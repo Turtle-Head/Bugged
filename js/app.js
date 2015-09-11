@@ -1,3 +1,30 @@
+// Main game object definitions
+var GameObjects = function(x, y, imageInfo){
+  this.x = x;
+  this.y = y;
+  this.imageInfo = imageInfo;
+}
+
+var badGuys = {
+  imageInfo: 'images/enemy-bug.png',
+  width: 101,
+  height: 171
+};
+
+var goodGuy = {
+  imageInfo: 'images/char-boy.png',
+  width: 101,
+  height: 171,
+  bound: {
+    left: 0,
+    right: 404,
+    bottom: 405
+  },
+  move: {
+    vert: 83,
+    horiz: 101
+  }
+};
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -16,9 +43,9 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 };
 
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+// Draw the objects on the screen, required method for game
+GameObjects.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.imageInfo.imageInfo), this.x, this.y);
 };
 
 // Now write your own player class
