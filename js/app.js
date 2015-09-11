@@ -25,6 +25,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 <<<<<<< HEAD
+<<<<<<< HEAD
 var Player = function() {
     this.sprite = 'images/char-horn-girl.png';
 }
@@ -40,6 +41,9 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(keyPress) {
 
 }
+=======
+
+>>>>>>> parent of 01ab91c... Added prototypes and variables for initial groundwork
 =======
 
 >>>>>>> parent of 01ab91c... Added prototypes and variables for initial groundwork
