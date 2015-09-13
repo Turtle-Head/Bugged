@@ -43,7 +43,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 };
 Enemy.prototype.render = function() {
-    
+
 };
 
 // Draw the objects on the screen, required method for game
@@ -85,7 +85,7 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-var player = new Player(202, 405, goodGuy);
+var player = new Player(303, 405, goodGuy);
 var allEnemies = [
   new Enemy(100, 63, badGuys)
 ];
