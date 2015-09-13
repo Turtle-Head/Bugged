@@ -42,7 +42,9 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 };
+Enemy.prototype.render = function() {
 
+};
 
 // Draw the objects on the screen, required method for game
 GameObjects.prototype.render = function() {
@@ -61,6 +63,12 @@ Player.prototype.constructor = Player;
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 Player.prototype.update = function(dt){
+
+};
+Player.prototype.handleInput = function(){
+
+};
+Player.prototype.render = function(){
 
 };
 
