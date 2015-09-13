@@ -43,7 +43,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 };
 Enemy.prototype.render = function() {
-
+    
 };
 
 // Draw the objects on the screen, required method for game
@@ -69,7 +69,7 @@ Player.prototype.handleInput = function(){
 
 };
 Player.prototype.render = function(){
-
+    ctx.drawImage(Resources.get(this.imageInfo.imageInfo), this.x, this.y);
 };
 
 
