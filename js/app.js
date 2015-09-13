@@ -26,7 +26,7 @@ var goodGuy = {
   }
 };
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x, y, imageInfo) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -43,6 +43,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 };
 
+
 // Draw the objects on the screen, required method for game
 GameObjects.prototype.render = function() {
     ctx.drawImage(Resources.get(this.imageInfo.imageInfo), this.x, this.y);
@@ -51,12 +52,17 @@ GameObjects.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-
+var Player = function(x, y, imageInfo){
+  GameObjects.call(this, x, y, imageInfo);
+}
+Player.prototype.constructor = Player;
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+Player.prototype.update = function(dt){
 
+};
 
 
 // This listens for key presses and sends the keys to your
@@ -71,3 +77,7 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+var player = new Player(202, 405, goodGuy);
+var allEnemies = [
+  new Enemy(100, 63, badGuys)
+];
