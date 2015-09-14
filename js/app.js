@@ -26,13 +26,17 @@ var goodGuy = {
   }
 };
 // Enemies our player must avoid
-var Enemy = function(x, y, imageInfo) {
+var Enemy = function(x, y, speed, imageInfo) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
+    this.sprite = imageInfo;
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    GameObjects.call(this, x, y, imageInfo);
 };
 
 // Update the enemy's position, required method for game
@@ -41,8 +45,9 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+
 };
-Enemy.prototype.render = function() {
+Enemy.prototype.render = function(x, y, imageInfo) {
 
 };
 
@@ -55,7 +60,7 @@ GameObjects.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function(x, y, imageInfo){
-  GameObjects.call(this, x, y, imageInfo);
+    GameObjects.call(this, x, y, imageInfo);
 }
 Player.prototype.constructor = Player;
 
@@ -65,8 +70,13 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function(dt){
 
 };
-Player.prototype.handleInput = function(){
-
+Player.prototype.handleInput = function(allowedKeys[e.keyCode]){
+    switch(allowedKeys[e.keyCode]) {
+      case 'left' : this.x -= player.width; break;
+      case 'up' : this.y -= player.height; break;
+      case 'right' : this.x += player.width; break;
+      case 'down' : this.y += player.height; break;
+    }
 };
 Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.imageInfo.imageInfo), this.x, this.y);
@@ -85,7 +95,11 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-var player = new Player(303, 405, goodGuy);
+
+// Enemies
 var allEnemies = [
-  new Enemy(100, 63, badGuys)
+  new Enemy(100, 63, 200, badGuys),
+  new Enemy(300, 200, 300, badGuys)
 ];
+// Player
+var player = new Player(303, 405, goodGuy);
