@@ -70,13 +70,14 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function(dt){
 
 };
-Player.prototype.handleInput = function(allowedKeys[e.keyCode]){
-    switch(allowedKeys[e.keyCode]) {
-      case 'left' : this.x -= player.width; break;
-      case 'up' : this.y -= player.height; break;
-      case 'right' : this.x += player.width; break;
-      case 'down' : this.y += player.height; break;
+Player.prototype.handleInput = function(input){
+    switch(input) {
+      case 'left' : this.x -= player.width;
+      case 'up' : this.y -= player.height;
+      case 'right' : this.x += player.width;
+      case 'down' : this.y += player.height; 
     }
+
 };
 Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.imageInfo.imageInfo), this.x, this.y);
