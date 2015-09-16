@@ -17,7 +17,7 @@ var goodGuy = {
   height: 171,
   bound: {
     left: 0,
-    right: 404,
+    right: 600,
     bottom: 405
   },
   move: {
@@ -46,13 +46,27 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x += this.speed * dt;
     if(this.x > 707) {
-      this.x = 1;
+      this.reset();
     }
 };
+// Draw the Enemies
 Enemy.prototype.render = function(x, y, imageInfo) {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-
+// Collision Detection
+Enemy.prototype.checkCollision = function(playr) {
+    if (playr.x < this.x + 75 &&
+        playr.x + 65 > this.x &&
+        playr.y < this.y + 50 &&
+        70 + playr.y > this.y) {
+        playr.reset();
+    }
+};
+// Set Enemies to starting positions and randomize their speeds again
+Enemy.prototype.reset = function() {
+    this.x = -this.x;
+    this.speed = Math.floor(Math.random() * (300) + 150);
+};
 // Draw the objects on the screen, required method for game
 GameObjects.prototype.render = function() {
     ctx.drawImage(Resources.get(this.imageInfo.imageInfo), this.x, this.y);
@@ -72,19 +86,45 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function(dt){
 
 };
-Player.prototype.handleInput = function(input){
-    switch(input) {
-      case 'left' : this.x -= player.width;
-      case 'up' : this.y -= player.height;
-      case 'right' : this.x += player.width;
-      case 'down' : this.y += player.height;
+Player.prototype.handleInput = function(keyPress){
+    switch(keyPress) {
+      case 'left' : {
+        if(this.x > goodGuy.bound.left) this.x -= goodGuy.move.horiz;
+        console.log("Left");
+        console.log(this.x);
+        console.log(this.y);
+        break;
+      }
+      case 'up' : {
+        if(this.y > goodGuy.bound.left) this.y -= goodGuy.move.vert;
+        console.log("Up");
+        console.log(this.x);
+        console.log(this.y);
+        break;
+      }
+      case 'right' : {
+        if(this.x < goodGuy.bound.right) this.x += goodGuy.move.horiz;
+        console.log("Right");
+        console.log(this.x);
+        console.log(this.y);
+        break;
+      }
+      case 'down' : {
+        if(this.y < goodGuy.bound.bottom) this.y += goodGuy.move.vert;
+        console.log("Down");
+        console.log(this.x);
+        console.log(this.y);
+        break;
+      }
     }
 
 };
 Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.imageInfo.imageInfo), this.x, this.y);
 };
+Player.prototype.reset = function(){
 
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -101,10 +141,10 @@ document.addEventListener('keyup', function(e) {
 
 // Enemies
 var allEnemies = [
-  new Enemy(100, 65),
-  new Enemy(300, 225),
-  new Enemy(50, 310),
-  new Enemy(25, 140)
+  new Enemy(-100, 65),
+  new Enemy(-300, 225),
+  new Enemy(-50, 310),
+  new Enemy(-25, 140)
 ];
 // Player
 var player = new Player(303, 405, goodGuy);
