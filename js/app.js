@@ -48,18 +48,19 @@ Enemy.prototype.update = function(dt) {
     if(this.x > 707) {
       this.reset();
     }
+    this.checkCollision();
 };
 // Draw the Enemies
 Enemy.prototype.render = function(x, y, imageInfo) {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 // Collision Detection
-Enemy.prototype.checkCollision = function(playr) {
-    if (playr.x < this.x + 75 &&
-        playr.x + 65 > this.x &&
-        playr.y < this.y + 50 &&
-        70 + playr.y > this.y) {
-        playr.reset();
+Enemy.prototype.checkCollision = function() {
+    if (player.x < this.x + 75 &&
+        player.x + 65 > this.x &&
+        player.y < this.y + 50 &&
+        70 + player.y > this.y) {
+        player.reset();
     }
 };
 // Set Enemies to starting positions and randomize their speeds again
@@ -123,7 +124,10 @@ Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.imageInfo.imageInfo), this.x, this.y);
 };
 Player.prototype.reset = function(){
-
+    console.log("Collision");
+    window.alert("Ouch!");
+    this.x = 303;
+    this.y = 405;
 }
 
 // This listens for key presses and sends the keys to your

@@ -82,7 +82,7 @@ var Engine = (function(global) {
         updateEntities(dt);
         ctx.clearRect(0,0,canvas.width,canvas.height);
         // checkCollisions();
-        
+
     }
 
     /* This is called by the update function  and loops through all of the
@@ -137,7 +137,6 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
         renderEntities();
     }
 
