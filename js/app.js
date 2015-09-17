@@ -56,11 +56,11 @@ Enemy.prototype.render = function(x, y, imageInfo) {
 };
 // Collision Detection
 Enemy.prototype.checkCollision = function() {
-    if (player.x < this.x + 75 &&
-        player.x + 65 > this.x &&
-        player.y < this.y + 50 &&
-        70 + player.y > this.y) {
-        player.reset();
+    if (player.x < this.x + (badGuys.width / 2) &&
+        player.x + (goodGuy.width / 2) > this.x &&
+        player.y < this.y + (badGuys.height / 3) &&
+        (goodGuy.height / 3) + player.y > this.y) {
+        player.collision = true;
     }
 };
 // Set Enemies to starting positions and randomize their speeds again
@@ -84,9 +84,37 @@ Player.prototype.constructor = Player;
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+Player.prototype.lives = 3;
+Player.prototype.points = 0;
 Player.prototype.update = function(dt){
-
+    if (player.collision == true) {
+        player.lives -= 1;
+        player.collision = false;
+        alert("You got Buggered!");
+        if (player.lives < 0) {
+            var restart = confirm("Try again?");
+            if (restart == true) {
+                player.lives = 3;
+                player.points = 0;
+                player.reset();
+            } else {
+                alert("Thank you for playing Buggered.")
+            }
+        } else {
+            player.reset();
+        }
+    }
+    if (player.y < 0) {
+        player.points += 50;
+        console.log(player.points);
+        var points = 'SCORE: %data%';
+        var updatedScore = points.replace("%data%", player.points);
+        $("#score").html("");
+        $("#score").html(updatedScore);
+        player.reset();
+    }
 };
+Player.prototype.collision = false;
 Player.prototype.handleInput = function(keyPress){
     switch(keyPress) {
       case 'left' : {
@@ -124,8 +152,6 @@ Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.imageInfo.imageInfo), this.x, this.y);
 };
 Player.prototype.reset = function(){
-    console.log("Collision");
-    window.alert("Ouch!");
     this.x = 303;
     this.y = 405;
 }
