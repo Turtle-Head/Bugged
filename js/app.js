@@ -104,14 +104,15 @@ Player.prototype.update = function(dt){
         alert("You got Bugged!");
         // Play again? Thanks player for playing, Resets player if they have more Lives
         if (player.lives < 0) {
-            var restart = confirm("Try again?");
+            var restart = confirm("You got " + player.points + " points. Try again?");
             if (restart == true) {
-                player.lives = 3;
-                player.points = 0;
-                player.reset();
+
             } else {
-                alert("Thank you for playing Bugged.")
+                alert("Thank you for playing Bugged.");
             }
+            player.lives = 3;
+            player.points = 0;
+            player.reset();
         } else {
             player.reset();
         }
@@ -120,6 +121,7 @@ Player.prototype.update = function(dt){
     if (player.y < 0) {
         player.points += 50;
         console.log(player.points);
+        alert(player.points + " points!");
         player.reset();
     }
 };
