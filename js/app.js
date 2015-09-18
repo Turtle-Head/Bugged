@@ -1,4 +1,4 @@
-// Main game object definitions
+// Game object definitions
 var GameObjects = function(x, y, imageInfo){
   this.x = x;
   this.y = y;
@@ -87,10 +87,20 @@ Player.prototype.constructor = Player;
 Player.prototype.lives = 3;
 Player.prototype.points = 0;
 Player.prototype.update = function(dt){
+    // Displays Player Score and Lives above the board
+    // Uses jQuery to act on the html
+    var points = 'SCORE: %data% LIVES: %lives%';
+    var updatedScore = points.replace("%data%", player.points);
+    $("#score").html("");
+    $("#score").html(updatedScore);
+    // Checks player state dead/points
+    // Asks player if they want to keep playing
+    // Update Lives
     if (player.collision == true) {
         player.lives -= 1;
         player.collision = false;
-        alert("You got Buggered!");
+        alert("You got Bugged!");
+        // Play again? Thanks player for playing, Resets player if they have more Lives
         if (player.lives < 0) {
             var restart = confirm("Try again?");
             if (restart == true) {
@@ -98,19 +108,16 @@ Player.prototype.update = function(dt){
                 player.points = 0;
                 player.reset();
             } else {
-                alert("Thank you for playing Buggered.")
+                alert("Thank you for playing Bugged.")
             }
         } else {
             player.reset();
         }
     }
+    // Updates Score
     if (player.y < 0) {
         player.points += 50;
         console.log(player.points);
-        var points = 'SCORE: %data%';
-        var updatedScore = points.replace("%data%", player.points);
-        $("#score").html("");
-        $("#score").html(updatedScore);
         player.reset();
     }
 };
