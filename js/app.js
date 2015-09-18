@@ -89,10 +89,12 @@ Player.prototype.points = 0;
 Player.prototype.update = function(dt){
     // Displays Player Score and Lives above the board
     // Uses jQuery to act on the html
-    var points = 'SCORE: %data% LIVES: %lives%';
+    var points = 'SCORE: %data%';
+    var lives = 'LIVES: %data%';
     var updatedScore = points.replace("%data%", player.points);
+    var updatedLives = lives.replace("%data%", player.lives);
     $("#score").html("");
-    $("#score").html(updatedScore);
+    $("#score").html(updatedScore + ' ' + updatedLives);
     // Checks player state dead/points
     // Asks player if they want to keep playing
     // Update Lives
