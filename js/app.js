@@ -130,7 +130,7 @@ Player.prototype.update = function(dt){
         player.level += 1;
         player.points += 50;
         setTimeout(player.reset(), 3000 * dt);
-        var bug = new Enemy(-100, Math.floor(Math.random() * (264) + 73));
+        var bug = new Enemy(-100, Math.floor(Math.random() * 264));
         allEnemies.push(bug);
     }
 };
