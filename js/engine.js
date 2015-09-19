@@ -122,7 +122,7 @@ var Engine = (function(global) {
         var numberOfRow = 6;
         // Layer Layouts
         var ground = [
-          [w, w, g, s, g, w, w],
+          [g, s, g, s, g, s, g],
           [s, s, s, s, s, s, s],
           [g, s, g, s, g, s, g],
           [g, g, g, g, g, g, g],
@@ -144,9 +144,10 @@ var Engine = (function(global) {
         ];
         for (var row = 0; row < numberOfRow; row++){
           for (var col = 0; col < numberOfCol; col++){
-            ctx.drawImage(Resources.get(layer1[row][col]), (col * tileHeight), (row * tileWidth));
+            ctx.drawImage(Resources.get(selector), (303), (-10));
           }
         }*/
+        ctx.drawImage(Resources.get(star), (303), (-10));
         renderEntities();
     }
 
