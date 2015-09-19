@@ -107,15 +107,15 @@ Player.prototype.update = function(dt){
     if (player.collision == true) {
         player.lives -= 1;
         player.collision = false;
-        alert("You got Bugged!");
+        //alert("You got Bugged!");
         // Play again? Thanks player for playing, Resets player if they have more Lives
         if (player.lives < 0) {
-            var restart = confirm("You got " + player.points + " points. Try again?");
+            /*var restart = confirm("You got " + player.points + " points. Try again?");
             if (restart == true) {
 
             } else {
                 alert("Thank you for playing Bugged.");
-            }
+            }*/
             player.lives = 3;
             player.points = 0;
             player.level = 0;
@@ -204,3 +204,6 @@ var allEnemies = [
 ];
 // Player
 var player = new Player(303, 405, goodGuy);
+// Instrucitons
+var instr = 'Use the arrow keys to move, Up, Down, Left & Right. Avoid the Bugs and reach the star to earn points.';
+$("#instructions").append(instr);
