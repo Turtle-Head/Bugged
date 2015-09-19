@@ -58,8 +58,8 @@ Enemy.prototype.render = function(x, y, imageInfo) {
 Enemy.prototype.checkCollision = function() {
     if (player.x < this.x + (badGuys.width / 2) &&
         player.x + (goodGuy.width / 2) > this.x &&
-        player.y < this.y + (badGuys.height / 2) &&
-        (goodGuy.height / 3) + player.y > this.y) {
+        player.y < this.y + (badGuys.height / 3) &&
+        (goodGuy.height / 4) + player.y > this.y) {
         player.collision = true;
     }
 };
