@@ -112,7 +112,7 @@ var Engine = (function(global) {
         var bg = 'images/Gem Blue.png';
         var gg = 'images/Gem Green.png';
         var g = 'images/grass-block.png';
-        var h = 'images/Heart.png';
+        var h = 'images/Selector.png';
         var star = 'images/Star.png';
         var r = 'images/Rock.png';
         //Set Tile Height, number of Rows and Columns
@@ -147,6 +147,7 @@ var Engine = (function(global) {
             ctx.drawImage(Resources.get(selector), (303), (-10));
           }
         }*/
+        ctx.drawImage(Resources.get(h), (303), (-10));
         ctx.drawImage(Resources.get(star), (303), (-10));
         ctx.drawImage(Resources.get(r), 0, 405);
         ctx.drawImage(Resources.get(r), 606, 405);
@@ -188,7 +189,7 @@ var Engine = (function(global) {
         'images/char-boy.png',
         'images/Gem Blue.png',
         'images/Gem Green.png',
-        'images/Heart.png',
+        'images/Selector.png',
         'images/Star.png',
         'images/Rock.png'
     ]);
