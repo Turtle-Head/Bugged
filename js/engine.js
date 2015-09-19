@@ -106,37 +106,47 @@ var Engine = (function(global) {
      * they are just drawing the entire screen over and over.
      */
     function render() {
-        /* This array holds the relative URL to the image used
-         * for that particular row of the game level.
-         */
-        var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
-            ],
-            numRows = 6,
-            numCols = 7,
-            row, col;
-
-        /* Loop through the number of rows and columns we've defined above
-         * and, using the rowImages array, draw the correct image for that
-         * portion of the "grid"
-         */
-        for (row = 0; row < numRows; row++) {
-            for (col = 0; col < numCols; col++) {
-                /* The drawImage function of the canvas' context element
-                 * requires 3 parameters: the image to draw, the x coordinate
-                 * to start drawing and the y coordinate to start drawing.
-                 * We're using our Resources helpers to refer to our images
-                 * so that we get the benefits of caching these images, since
-                 * we're using them over and over.
-                 */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
-            }
+        // Variables holding the relative images for the tiles
+        var w = 'images/water-block.png';
+        var s = 'images/stone-block.png';
+        var bg = 'images/Gem Blue.png';
+        var gg = 'images/Gem Green.png';
+        var g = 'images/grass-block.png';
+        var h = 'images/Heart.png';
+        var star = 'images/Star.png';
+        var r = 'images/Rock.png';
+        //Set Tile Height, number of Rows and Columns
+        var tileWidth = 83;
+        var tileHeight = 101;
+        var numberOfCol = 7;
+        var numberOfRow = 6;
+        // Layer Layouts
+        var ground = [
+          [w, w, g, s, g, w, w],
+          [s, s, s, s, s, s, s],
+          [g, s, g, s, g, s, g],
+          [g, g, g, g, g, g, g],
+          [g, g, g, g, g, g, g],
+          [s, s, s, s, s, s, s]
+        ];
+        for (var row = 0; row < numberOfRow; row++){
+          for (var col = 0; col < numberOfCol; col++){
+            ctx.drawImage(Resources.get(ground[row][col]), (col * tileHeight), (row * tileWidth));
+          }
         }
+        /*var layer1 = [
+          [r, r, r, bg, r, r, r],
+          [gg, gg, gg, gg, gg, gg, gg],
+          [g, s, g, s, g, s, g],
+          [g, g, g, g, g, g, g],
+          [g, g, g, g, g, g, g],
+          [s, s, s, s, s, s, s]
+        ];
+        for (var row = 0; row < numberOfRow; row++){
+          for (var col = 0; col < numberOfCol; col++){
+            ctx.drawImage(Resources.get(layer1[row][col]), (col * tileHeight), (row * tileWidth));
+          }
+        }*/
         renderEntities();
     }
 
@@ -172,7 +182,12 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Gem Blue.png',
+        'images/Gem Green.png',
+        'images/Heart.png',
+        'images/Star.png',
+        'images/Rock.png'
     ]);
     Resources.onReady(init);
 

@@ -118,12 +118,12 @@ Player.prototype.update = function(dt){
         }
     }
     // Updates Score
-    if (player.y < 0) {
+    /*if (player.y < 0) {
         player.points += 50;
         console.log(player.points);
         alert(player.points + " points!");
         player.reset();
-    }
+    }*/
 };
 Player.prototype.collision = false;
 Player.prototype.handleInput = function(keyPress){
