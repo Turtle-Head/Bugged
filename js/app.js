@@ -92,10 +92,15 @@ Player.prototype.update = function(dt){
     // Uses jQuery to act on the html
     var points = 'SCORE: %data%';
     var lives = 'LIVES: %data%';
+    var highScore = 'HIGHSCORE: %data%';
     var updatedScore = points.replace("%data%", player.points);
     var updatedLives = lives.replace("%data%", player.lives);
+    if (player.points > player.highScore){
+      player.highScore = player.points;
+    }
+    var updatedHS = highScore.replace("%data%", player.highScore);
     $("#score").html("");
-    $("#score").html(updatedScore + ' ' + updatedLives);
+    $("#score").html(updatedScore + ' ' + updatedLives + ' ' + updatedHS);
     // Checks player state dead/points
     // Asks player if they want to keep playing
     // Update Lives
@@ -135,6 +140,7 @@ Player.prototype.update = function(dt){
     }
 };
 Player.prototype.collision = false;
+Player.prototype.highScore = 0;
 Player.prototype.handleInput = function(keyPress){
     switch(keyPress) {
       case 'left' : {
