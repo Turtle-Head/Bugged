@@ -58,7 +58,7 @@ Enemy.prototype.render = function(x, y, imageInfo) {
 Enemy.prototype.checkCollision = function() {
     if (player.x < this.x + (badGuys.width / 2) &&
         player.x + (goodGuy.width / 2) > this.x &&
-        player.y < this.y + (badGuys.height / 3) &&
+        player.y < this.y + (badGuys.height / 2) &&
         (goodGuy.height / 3) + player.y > this.y) {
         player.collision = true;
     }
@@ -86,6 +86,7 @@ Player.prototype.constructor = Player;
 // Place the player object in a variable called player
 Player.prototype.lives = 3;
 Player.prototype.points = 0;
+Player.prototype.level = 0;
 Player.prototype.update = function(dt){
     // Displays Player Score and Lives above the board
     // Uses jQuery to act on the html
@@ -112,18 +113,26 @@ Player.prototype.update = function(dt){
             }
             player.lives = 3;
             player.points = 0;
-            player.reset();
+            player.level = 0;
+            allEnemies = [
+              new Enemy(-100, 65),
+              new Enemy(-300, 225),
+              new Enemy(-50, 310),
+              new Enemy(-25, 140)
+            ];
+            setTimeout(player.reset(), 3000 * dt);
         } else {
-            player.reset();
+            setTimeout(player.reset(), 3000 * dt);
         }
     }
-    // Updates Score
-    /*if (player.y < 0) {
+    // Updates Level
+    if (player.y == -10 && player.x == 303) {
+        player.level += 1;
         player.points += 50;
-        console.log(player.points);
-        alert(player.points + " points!");
-        player.reset();
-    }*/
+        setTimeout(player.reset(), 3000 * dt);
+        var bug = new Enemy(-100, Math.floor(Math.random() * (264) + 73));
+        allEnemies.push(bug);
+    }
 };
 Player.prototype.collision = false;
 Player.prototype.handleInput = function(keyPress){
