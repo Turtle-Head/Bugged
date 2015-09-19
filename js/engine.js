@@ -125,9 +125,9 @@ var Engine = (function(global) {
           [g, s, g, s, g, s, g],
           [s, s, s, s, s, s, s],
           [g, s, g, s, g, s, g],
-          [g, g, g, g, g, g, g],
-          [g, g, g, g, g, g, g],
-          [s, s, s, s, s, s, s]
+          [g, g, s, g, s, g, g],
+          [s, g, g, s, g, g, s],
+          [s, g, s, s, s, g, s]
         ];
         for (var row = 0; row < numberOfRow; row++){
           for (var col = 0; col < numberOfCol; col++){
@@ -148,6 +148,8 @@ var Engine = (function(global) {
           }
         }*/
         ctx.drawImage(Resources.get(star), (303), (-10));
+        ctx.drawImage(Resources.get(r), 0, 405);
+        ctx.drawImage(Resources.get(r), 606, 405);
         renderEntities();
     }
 
