@@ -85,7 +85,13 @@ GameObjects.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function(x, y, imageInfo){
+    // Start the player off at o points, 3 lives, level 0, collision false and highscore 0
     this.lives = 3;
+    this.points = 0;
+    this.level = 0;
+    this.collision = false;
+    this.highScore = 0;
+    // assign the player object with some x, y and image
     GameObjects.call(this, x, y, imageInfo);
 }
 Player.prototype = Object.create(GameObjects.prototype);
@@ -94,9 +100,6 @@ Player.prototype.constructor = Player;
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
-Player.prototype.points = 0;
-Player.prototype.level = 0;
 Player.prototype.update = function(dt){
     // Displays Player Score and Lives above the board
     // Uses jQuery to act on the html
@@ -146,8 +149,6 @@ Player.prototype.update = function(dt){
         allEnemies.push(bug);
     }
 };
-Player.prototype.collision = false;
-Player.prototype.highScore = 0;
 Player.prototype.handleInput = function(keyPress){
     switch(keyPress) {
       case 'left' : {
