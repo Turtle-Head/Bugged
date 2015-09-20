@@ -73,7 +73,7 @@ Enemy.prototype.checkCollision = function() {
 };
 // Set Enemies to starting positions and randomize their speeds again
 Enemy.prototype.reset = function() {
-    this.x = -this.x;
+    this.x *= -1;
     this.speed = Math.floor(Math.random() * (300) + 150);
 };
 // Draw the objects on the screen, required method for game
