@@ -29,13 +29,14 @@ var goodGuy = {
 var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
+    var maxSpeed = 300;
+    var minSpeed = 150;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
-    this.speed = Math.floor(Math.random() * (300) + 150);
+    this.speed = Math.floor(Math.random() * maxSpeed + minSpeed);
 };
 
 // Update the enemy's position, required method for game
