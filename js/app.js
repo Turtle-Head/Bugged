@@ -29,6 +29,9 @@ var goodGuy = {
 var points = 'SCORE: %data%';
 var lives = 'LIVES: %data%';
 var highScore = 'HIGHSCORE: %data%';
+// Defining the static canvas size
+var canvasWidth = 707;
+var canvasHeight = 606;
 // Enemies our player must avoid
 var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
@@ -50,7 +53,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.speed * dt;
-    if(this.x > 707) {
+    if(this.x > canvasWidth) {
       this.reset();
     }
     this.checkCollision();
