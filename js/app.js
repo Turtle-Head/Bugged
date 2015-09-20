@@ -80,6 +80,7 @@ GameObjects.prototype.render = function() {
 var Player = function(x, y, imageInfo){
     GameObjects.call(this, x, y, imageInfo);
 }
+Player.prototype = Object.create(GameObjects.prototype);
 Player.prototype.constructor = Player;
 
 // Now instantiate your objects.
