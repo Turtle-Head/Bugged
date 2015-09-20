@@ -99,32 +99,32 @@ Player.prototype.level = 0;
 Player.prototype.update = function(dt){
     // Displays Player Score and Lives above the board
     // Uses jQuery to act on the html
-    var updatedScore = points.replace("%data%", player.points);
-    var updatedLives = lives.replace("%data%", player.lives);
-    if (player.points > player.highScore){
-      player.highScore = player.points;
+    var updatedScore = points.replace("%data%", this.points);
+    var updatedLives = lives.replace("%data%", this.lives);
+    if (this.points > this.highScore){
+      this.highScore = this.points;
     }
-    var updatedHS = highScore.replace("%data%", player.highScore);
+    var updatedHS = highScore.replace("%data%", this.highScore);
     $("#score").html("");
     $("#score").html(updatedScore + ' ' + updatedLives + ' ' + updatedHS);
     // Checks player state dead/points
     // Asks player if they want to keep playing
     // Update Lives
-    if (player.collision == true) {
-        player.lives -= 1;
-        player.collision = false;
+    if (this.collision == true) {
+        this.lives -= 1;
+        this.collision = false;
         //alert("You got Bugged!");
         // Play again? Thanks player for playing, Resets player if they have more Lives
-        if (player.lives < 0) {
+        if (this.lives < 0) {
             /*var restart = confirm("You got " + player.points + " points. Try again?");
             if (restart == true) {
 
             } else {
                 alert("Thank you for playing Bugged.");
             }*/
-            player.lives = 3;
-            player.points = 0;
-            player.level = 0;
+            this.lives = 3;
+            this.points = 0;
+            this.level = 0;
             allEnemies = [
               new Enemy(-100, 65),
               new Enemy(-300, 225),
@@ -137,9 +137,9 @@ Player.prototype.update = function(dt){
         }
     }
     // Updates Level
-    if (player.y == -10 && player.x == 303) {
-        player.level += 1;
-        player.points += 50;
+    if (this.y == -10 && this.x == 303) {
+        this.level += 1;
+        this.points += 50;
         setTimeout(player.reset(), 3000 * dt);
         var bug = new Enemy(-100, Math.floor(Math.random() * 264));
         allEnemies.push(bug);
