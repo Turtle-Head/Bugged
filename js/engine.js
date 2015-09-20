@@ -134,19 +134,6 @@ var Engine = (function(global) {
             ctx.drawImage(Resources.get(ground[row][col]), (col * tileHeight), (row * tileWidth));
           }
         }
-        /*var layer1 = [
-          [r, r, r, bg, r, r, r],
-          [gg, gg, gg, gg, gg, gg, gg],
-          [g, s, g, s, g, s, g],
-          [g, g, g, g, g, g, g],
-          [g, g, g, g, g, g, g],
-          [s, s, s, s, s, s, s]
-        ];
-        for (var row = 0; row < numberOfRow; row++){
-          for (var col = 0; col < numberOfCol; col++){
-            ctx.drawImage(Resources.get(selector), (303), (-10));
-          }
-        }*/
         ctx.drawImage(Resources.get(h), (303), (-10));
         ctx.drawImage(Resources.get(star), (303), (-10));
         ctx.drawImage(Resources.get(r), 0, 405);
