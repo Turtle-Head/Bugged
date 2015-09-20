@@ -36,13 +36,11 @@ var canvasHeight = 606;
 var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
+    this.sprite = 'images/enemy-bug.png';
+    GameObjects.call(this, x, y, this.sprite);
+    // Set the speed of the enemy
     var maxSpeed = 300;
     var minSpeed = 150;
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-    this.x = x;
-    this.y = y;
     this.speed = Math.floor(Math.random() * maxSpeed + minSpeed);
 };
 
