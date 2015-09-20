@@ -25,6 +25,10 @@ var goodGuy = {
     horiz: 101
   }
 };
+// Score, Lives, topscore
+var points = 'SCORE: %data%';
+var lives = 'LIVES: %data%';
+var highScore = 'HIGHSCORE: %data%';
 // Enemies our player must avoid
 var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
@@ -92,9 +96,6 @@ Player.prototype.level = 0;
 Player.prototype.update = function(dt){
     // Displays Player Score and Lives above the board
     // Uses jQuery to act on the html
-    var points = 'SCORE: %data%';
-    var lives = 'LIVES: %data%';
-    var highScore = 'HIGHSCORE: %data%';
     var updatedScore = points.replace("%data%", player.points);
     var updatedLives = lives.replace("%data%", player.lives);
     if (player.points > player.highScore){
