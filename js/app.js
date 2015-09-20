@@ -25,17 +25,25 @@ var goodGuy = {
     horiz: 101
   }
 };
+// Score, Lives, topscore
+var points = 'SCORE: %data%';
+var lives = 'LIVES: %data%';
+var highScore = 'HIGHSCORE: %data%';
+// Defining the static canvas size
+var canvasWidth = 707;
+var canvasHeight = 606;
 // Enemies our player must avoid
 var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
+    var maxSpeed = 300;
+    var minSpeed = 150;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
-    this.speed = Math.floor(Math.random() * (300) + 150);
+    this.speed = Math.floor(Math.random() * maxSpeed + minSpeed);
 };
 
 // Update the enemy's position, required method for game
@@ -45,7 +53,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.speed * dt;
-    if(this.x > 707) {
+    if(this.x > canvasWidth) {
       this.reset();
     }
     this.checkCollision();
@@ -65,7 +73,7 @@ Enemy.prototype.checkCollision = function() {
 };
 // Set Enemies to starting positions and randomize their speeds again
 Enemy.prototype.reset = function() {
-    this.x = -this.x;
+    this.x *= -1;
     this.speed = Math.floor(Math.random() * (300) + 150);
 };
 // Draw the objects on the screen, required method for game
@@ -79,6 +87,7 @@ GameObjects.prototype.render = function() {
 var Player = function(x, y, imageInfo){
     GameObjects.call(this, x, y, imageInfo);
 }
+Player.prototype = Object.create(GameObjects.prototype);
 Player.prototype.constructor = Player;
 
 // Now instantiate your objects.
@@ -90,35 +99,32 @@ Player.prototype.level = 0;
 Player.prototype.update = function(dt){
     // Displays Player Score and Lives above the board
     // Uses jQuery to act on the html
-    var points = 'SCORE: %data%';
-    var lives = 'LIVES: %data%';
-    var highScore = 'HIGHSCORE: %data%';
-    var updatedScore = points.replace("%data%", player.points);
-    var updatedLives = lives.replace("%data%", player.lives);
-    if (player.points > player.highScore){
-      player.highScore = player.points;
+    var updatedScore = points.replace("%data%", this.points);
+    var updatedLives = lives.replace("%data%", this.lives);
+    if (this.points > this.highScore){
+      this.highScore = this.points;
     }
-    var updatedHS = highScore.replace("%data%", player.highScore);
+    var updatedHS = highScore.replace("%data%", this.highScore);
     $("#score").html("");
     $("#score").html(updatedScore + ' ' + updatedLives + ' ' + updatedHS);
     // Checks player state dead/points
     // Asks player if they want to keep playing
     // Update Lives
-    if (player.collision == true) {
-        player.lives -= 1;
-        player.collision = false;
+    if (this.collision == true) {
+        this.lives -= 1;
+        this.collision = false;
         //alert("You got Bugged!");
         // Play again? Thanks player for playing, Resets player if they have more Lives
-        if (player.lives < 0) {
+        if (this.lives < 0) {
             /*var restart = confirm("You got " + player.points + " points. Try again?");
             if (restart == true) {
 
             } else {
                 alert("Thank you for playing Bugged.");
             }*/
-            player.lives = 3;
-            player.points = 0;
-            player.level = 0;
+            this.lives = 3;
+            this.points = 0;
+            this.level = 0;
             allEnemies = [
               new Enemy(-100, 65),
               new Enemy(-300, 225),
@@ -131,9 +137,9 @@ Player.prototype.update = function(dt){
         }
     }
     // Updates Level
-    if (player.y == -10 && player.x == 303) {
-        player.level += 1;
-        player.points += 50;
+    if (this.y == -10 && this.x == 303) {
+        this.level += 1;
+        this.points += 50;
         setTimeout(player.reset(), 3000 * dt);
         var bug = new Enemy(-100, Math.floor(Math.random() * 264));
         allEnemies.push(bug);
