@@ -85,6 +85,7 @@ GameObjects.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function(x, y, imageInfo){
+    this.lives = 3;
     GameObjects.call(this, x, y, imageInfo);
 }
 Player.prototype = Object.create(GameObjects.prototype);
@@ -93,7 +94,7 @@ Player.prototype.constructor = Player;
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-Player.prototype.lives = 3;
+
 Player.prototype.points = 0;
 Player.prototype.level = 0;
 Player.prototype.update = function(dt){
