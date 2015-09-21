@@ -4,7 +4,7 @@ var GameObjects = function(x, y, imageInfo){
   this.y = y;
   this.imageInfo = imageInfo;
 }
-
+// Some Definitions of our object sizes, bounds and their images
 var badGuys = {
   imageInfo: 'images/enemy-bug.png',
   width: 101,
