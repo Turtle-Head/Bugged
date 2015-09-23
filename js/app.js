@@ -3,7 +3,7 @@ var GameObjects = function(x, y, imageInfo){
   this.x = x;
   this.y = y;
   this.imageInfo = imageInfo;
-}
+};
 // Some Definitions of our object sizes, bounds and their images
 var badGuys = {
   imageInfo: 'images/enemy-bug.png',
@@ -91,7 +91,7 @@ var Player = function(x, y, imageInfo){
     this.highScore = 0;
     // assign the player object with some x, y and image
     GameObjects.call(this, x, y, imageInfo);
-}
+};
 Player.prototype = Object.create(GameObjects.prototype);
 Player.prototype.constructor = Player;
 
@@ -112,7 +112,7 @@ Player.prototype.update = function(dt){
     // Checks player state dead/points
     // Asks player if they want to keep playing
     // Update Lives
-    if (this.collision == true) {
+    if (this.collision === true) {
         this.lives -= 1;
         this.collision = false;
         //alert("You got Bugged!");
@@ -186,7 +186,7 @@ Player.prototype.render = function(){
 Player.prototype.reset = function(){
     this.x = 303;
     this.y = 405;
-}
+};
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
