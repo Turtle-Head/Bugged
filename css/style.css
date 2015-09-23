@@ -8,8 +8,12 @@ body {
 }
 h2 {
   text-align:center;
-  color: #00CC99;
+  color: #99FF33;
 }
 h1 {
   font-size: 4em;
+  color: #009933;
+}
+header {
+  color: #99FF33;
 }
