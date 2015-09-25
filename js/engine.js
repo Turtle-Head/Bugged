@@ -107,10 +107,7 @@ var Engine = (function(global) {
      */
     function render() {
         // Variables holding the relative images for the tiles
-        var w = 'images/water-block.png';
         var s = 'images/stone-block.png';
-        var bg = 'images/Gem Blue.png';
-        var gg = 'images/Gem Green.png';
         var g = 'images/grass-block.png';
         var h = 'images/Selector.png';
         var star = 'images/Star.png';
