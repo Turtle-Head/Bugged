@@ -1,3 +1,6 @@
+// Instrucitons
+var instr = 'Use the arrow keys to move, Up, Down, Left & Right. Avoid the Bugs and reach the star to earn points.';
+$("#instructions").append(instr);
 // Game object definitions
 var GameObjects = function(x, y, imageInfo){
   this.x = x;
@@ -210,6 +213,3 @@ var allEnemies = [
 ];
 // Player
 var player = new Player(303, 405, goodGuy);
-// Instrucitons
-var instr = 'Use the arrow keys to move, Up, Down, Left & Right. Avoid the Bugs and reach the star to earn points.';
-$("#instructions").append(instr);
