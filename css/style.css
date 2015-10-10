@@ -12,10 +12,6 @@ h2{
 h1{
   font-size:4em;
   color:#093;
-  padding: 10px;
-  border: solid 5px #9f3;
-  border-radius: 70px 40px;
-  height: 100px;
   text-align:center;
 }
 div{
@@ -23,4 +19,10 @@ div{
 }
 .instructions{
   font-size: 1em;
+}
+.score{
+  padding: 7px;
+  border: solid 5px #9f3;
+  border-radius: 70px 40px;
+  height: 25px;
 }
