@@ -1,3 +1,10 @@
+body{
+  text-align:center;
+  color:#3aa2d0;
+  background:black;
+  font-family:'Permanent Marker', serif;
+  max-width: 100%;
+}
 h2{
   text-align:center;
   color:#9f3;
