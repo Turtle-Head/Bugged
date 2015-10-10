@@ -13,10 +13,11 @@ h1{
   font-size:4em;
   color:#093;
   padding: 10px;
-  border: solid 5px #3aa2d0;
+  border: solid 5px #9f3;
   border-radius: 70px 40px;
   width: 30%;
-  height: 130px;
+  height: 100px;
+  text-align:center;
 }
 div{
   color:#9f3;
