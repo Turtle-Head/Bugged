@@ -20,7 +20,7 @@ div{
   font-size: 1em;
 }
 .line{
-  height: 3px;
+  height: 1px;
   width: 100%;
-  background: #3aa2d0;
+  border: solid 2px #3aa2d0;
 }
