@@ -19,3 +19,8 @@ div{
 .instructions{
   font-size: 1em;
 }
+.line{
+  height: 3px;
+  width: 100%;
+  background: #3aa2d0;
+}
