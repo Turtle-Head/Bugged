@@ -8,15 +8,15 @@ body{
 h2{
   text-align:center;
   color:#9f3;
-  padding: 7px;
-  border: solid 5px #9f3;
-  border-radius: 70px 40px;
-  height: 30px;
 }
 h1{
   font-size:4em;
   color:#093;
   text-align:center;
+  padding: 10px;
+  border: solid 5px #9f3;
+  border-radius: 70px 40px;
+  height: 100px;
 }
 div{
   color:#9f3;
