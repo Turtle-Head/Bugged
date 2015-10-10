@@ -167,12 +167,9 @@ var Engine = (function(global) {
      */
     Resources.load([
         'images/stone-block.png',
-        'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/Gem Blue.png',
-        'images/Gem Green.png',
         'images/Selector.png',
         'images/Star.png',
         'images/Rock.png'
