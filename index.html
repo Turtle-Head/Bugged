@@ -6,15 +6,29 @@
     <title>Bugged: Clone of Frogger</title>
     <meta name=viewport content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/style.min.css">
+    <!--<link rel="stylesheet" href="css/style.min.css">-->
+    <style>
+      .instructions{font-size: 1em;}
+    </style>
 </head>
 <body>
-      <div id='instructions'></div>
-      <header><h1>Bugged</h1></header>
-      <footer><h2 id='score'>SCORE: 0 LIVES: 3 HIGHSCORE: 0</h2></footer>
-      <script async src="js/resources.min.js"></script>
-      <script async src="js/jQuery.min.js"></script>
-      <script async src="js/app.min.js"></script>
-      <script async src="js/engine.min.js"></script>
+  <script>
+    var cb = function() {
+      var l = document.createElement('link'); l.rel = 'stylesheet';
+      l.href = 'css/style.min.css';
+      var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
+    };
+    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+        webkitRequestAnimationFrame || msRequestAnimationFrame;
+    if (raf) raf(cb);
+    else window.addEventListener('load', cb);
+  </script>
+  <div id='instructions'></div>
+  <header><h1>Bugged</h1></header>
+  <footer><h2 id='score'>SCORE: 0 LIVES: 3 HIGHSCORE: 0</h2></footer>
+  <script async src="js/resources.min.js"></script>
+  <script async src="js/jQuery.min.js"></script>
+  <script async src="js/app.min.js"></script>
+  <script async src="js/engine.min.js"></script>
 </body>
 </html>
