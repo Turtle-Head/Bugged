@@ -1,45 +1,275 @@
 <!DOCTYPE html>
-<html>
-<Cache-Control max-age="6000">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Bugged: Clone of Frogger</title>
-    <meta name=viewport content="width=device-width, initial-scale=1">
-    <!--<link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css">-->
-    <!--<link rel="stylesheet" href="css/style.min.css">-->
-    <style>
-      .instructions{font-size: 1em;}
-    </style>
+  <meta charset="UTF-8">
+  <title>Bugged: Clone of Frogger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .instructions { font-size: 1em; }
+    .score { font-size: 1.2em; font-weight: bold; }
+    body { font-family: 'Permanent Marker', cursive; background: #f8f8f8; }
+    header, footer { text-align: center; }
+  </style>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css">
+  <!-- React and ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
-  <script>
-    var cb = function() {
-      var l = document.createElement('link'); l.rel = 'stylesheet';
-      l.href = 'https://fonts.googleapis.com/css?family=Permanent+Marker';
-      var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
-    };
-    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-        webkitRequestAnimationFrame || msRequestAnimationFrame;
-    if (raf) raf(cb);
-    else window.addEventListener('load', cb);
-  </script>
-  <script>
-    var cb = function() {
-      var l = document.createElement('link'); l.rel = 'stylesheet';
-      l.href = 'css/style.min.css';
-      var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
-    };
-    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-        webkitRequestAnimationFrame || msRequestAnimationFrame;
-    if (raf) raf(cb);
-    else window.addEventListener('load', cb);
-  </script>
-  <div id='instructions'></div>
-  <header><h1>Bugged</h1></header>
-  <footer><h2 id='score'>SCORE: 0 LIVES: 3 HIGHSCORE: 0</h2></footer>
+  <div id="game-ui"></div>
+  <!-- The game canvas will be appended by engine.js -->
+
+  <!-- Game scripts -->
   <script src="js/jQuery.min.js"></script>
   <script src="js/resources.min.js"></script>
   <script src="js/engine.min.js"></script>
   <script src="js/app.min.js"></script>
+
+  <!-- React UI -->
+  <script type="text/babel">
+    function Instructions() {
+      return (
+        <div className="instructions">
+          Use the arrow keys or tap/click to move.<br />
+            {/* Avoid the bugs and reach the star tile to score points.
+            Each tap moves the player one tile in the direction of the click. */}
+        </div>
+      );
+    }
+
+    function Header() {
+      return (
+        <header>
+          <h1>Bugged</h1>
+        </header>
+      );
+    }
+
+    function ScoreFooter() {
+      const [score, setScore] = React.useState({ points: 0, lives: 3, highscore: 0 });
+
+      React.useEffect(() => {
+        function updateScore(e) {
+          setScore({ ...e.detail });
+        }
+        window.addEventListener('scoreUpdate', updateScore);
+        // Clean up event listener on unmount
+        return () => window.removeEventListener('scoreUpdate', updateScore);
+      }, []);
+
+      return (
+        <footer>
+          <h2 className="score">
+            SCORE: {score.points} LIVES: {score.lives} HIGHSCORE: {score.highscore}
+          </h2>
+        </footer>
+      );
+    }
+
+    function GameUI() {
+      return (
+        <>
+          <Instructions />
+          <Header />
+          <ScoreFooter />
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('game-ui')).render(<GameUI />);
+  </script>
+
+  <!-- Touch/Click movement logic: move player two tiles per click/tap in the direction of the click -->
+  <script>
+    // Helper: get tile coordinates from pixel coordinates
+    function getTileFromCoords(x, y) {
+      var tileWidth = 101;
+      var tileHeight = 83;
+      return {
+        col: Math.floor(x / tileWidth),
+        row: Math.floor(y / tileHeight)
+      };
+    }
+
+    // Helper: get pixel coordinates from tile coordinates
+    function getCoordsFromTile(col, row) {
+      var tileWidth = 101;
+      var tileHeight = 83;
+      return {
+        x: col * tileWidth,
+        y: row * tileHeight - 10 // adjust for sprite offset
+      };
+    }
+
+    // --- HIT DETECTION AND GAME STATE ---
+    document.addEventListener('DOMContentLoaded', function() {
+      function setupPlayerTouchMove() {
+        var canvas = document.querySelector('canvas');
+        if (!canvas || typeof window.Player !== 'function' || typeof window.player !== 'object' || !window.allEnemies) {
+          setTimeout(setupPlayerTouchMove, 100);
+          return;
+        }
+
+        // Add getTile method to Player if not present
+        if (!window.Player.prototype.getTile) {
+          window.Player.prototype.getTile = function() {
+            var tileWidth = 101;
+            var tileHeight = 83;
+            return {
+              col: Math.round(this.x / tileWidth),
+              row: Math.round((this.y + 10) / tileHeight)
+            };
+          };
+        }
+
+        // Add path and isMoving to Player if not present
+        if (!('path' in window.player)) window.player.path = [];
+        if (!('isMoving' in window.player)) window.player.isMoving = false;
+
+        // --- GAME STATE ---
+        if (!window.gameState) {
+          window.gameState = {
+            points: 0,
+            lives: 3,
+            highscore: 0
+          };
+        }
+        // Save original update only once
+        if (!window.Player.prototype._origUpdate) {
+          window.Player.prototype._origUpdate = window.Player.prototype.update;
+        }
+        var origUpdate = window.Player.prototype._origUpdate;
+
+        window.Player.prototype.update = function(dt) {
+          // Move one step per update (per tick)
+          if (this.path && this.path.length > 0) {
+            var next = this.path.shift();
+            if (next) {
+              var coords = getCoordsFromTile(next.col, next.row);
+              this.x = coords.x;
+              this.y = coords.y;
+            }
+            this.isMoving = this.path.length > 0;
+          }
+
+          // --- HIT DETECTION ---
+          var playerTile = this.getTile();
+
+          // Enemy collision: if any enemy is on the same row and close in x
+          var hitEnemy = false;
+          for (var i = 0; i < window.allEnemies.length; i++) {
+            var enemy = window.allEnemies[i];
+            var enemyCol = Math.round(enemy.x / 101);
+            var enemyRow = Math.round((enemy.y + 10) / 83);
+            if (enemyRow === playerTile.row && Math.abs(enemyCol - playerTile.col) < 0.5) {
+              hitEnemy = true;
+              break;
+            }
+          }
+
+          // Decrement lives and reset on enemy collision, only if lives > 0
+          if (hitEnemy && window.gameState.lives > 0) {
+            window.gameState.lives -= 1;
+            if (window.gameState.lives < 0) window.gameState.lives = 0;
+            this.x = 2 * 101;
+            this.y = 5 * 83 - 10;
+            this.path = [];
+            this.isMoving = false;
+            window.dispatchEvent(new CustomEvent('scoreUpdate', { detail: window.gameState }));
+
+            // Game over check
+            if (window.gameState.lives === 0) {
+              setTimeout(function() {
+                var msg = "Game Over Score: " + window.gameState.points + "\nNew Game?";
+                if (window.gameState.points > window.gameState.highscore) {
+                  window.gameState.highscore = window.gameState.points;
+                }
+                if (confirm(msg)) {
+                  window.gameState.points = 0;
+                  window.gameState.lives = 3;
+                  // highscore is preserved
+                  window.dispatchEvent(new CustomEvent('scoreUpdate', { detail: window.gameState }));
+                  // Reset player position
+                  window.player.x = 2 * 101;
+                  window.player.y = 5 * 83 - 10;
+                  window.player.path = [];
+                  window.player.isMoving = false;
+                }
+              }, 100);
+            }
+          }
+
+          // WIN detection: increment score and reset if player lands on row 0, col 3, only if lives > 0
+          if (
+            playerTile.row === 0 &&
+            playerTile.col === 3 &&
+            window.gameState.lives > 0
+          ) {
+            window.gameState.points += 50;
+            if (window.gameState.points > window.gameState.highscore) {
+              window.gameState.highscore = window.gameState.points;
+            }
+            this.x = 2 * 101;
+            this.y = 5 * 83 - 10;
+            this.path = [];
+            this.isMoving = false;
+            window.dispatchEvent(new CustomEvent('scoreUpdate', { detail: window.gameState }));
+          }
+
+          // Always call the original update to keep the engine running
+          if (origUpdate) origUpdate.call(this, dt);
+        };
+
+        // Handle click/touch to set path
+        function handleMove(event) {
+          var x, y;
+          if (event.touches && event.touches.length) {
+            x = event.touches[0].clientX - canvas.getBoundingClientRect().left;
+            y = event.touches[0].clientY - canvas.getBoundingClientRect().top;
+          } else {
+            x = event.clientX - canvas.getBoundingClientRect().left;
+            y = event.clientY - canvas.getBoundingClientRect().top;
+          }
+          var targetTile = getTileFromCoords(x, y);
+          var playerTile = window.player.getTile();
+
+          // Only set path if not already moving
+          if (!window.player.isMoving) {
+            var dCol = targetTile.col - playerTile.col;
+            var dRow = targetTile.row - playerTile.row;
+            var path = [];
+            // Move only one tile in the direction of the click
+            if (Math.abs(dCol) > Math.abs(dRow) && dCol !== 0) {
+              // Horizontal move
+              var step = dCol > 0 ? 1 : -1;
+              var newCol = playerTile.col + step;
+              path.push({col: newCol, row: playerTile.row});
+            } else if (dRow !== 0) {
+              // Vertical move
+              var step = dRow > 0 ? 1 : -1;
+              var newRow = playerTile.row + step;
+              path.push({col: playerTile.col, row: newRow});
+            }
+            // Prevent moving off the board
+            path = path.filter(function(tile) {
+              return tile.col >= 0 && tile.col <= 4 && tile.row >= 0 && tile.row <= 5;
+            });
+            window.player.path = path;
+            window.player.isMoving = window.player.path.length > 0;
+          }
+        }
+
+        canvas.addEventListener('click', handleMove);
+        canvas.addEventListener('touchstart', handleMove);
+
+        // Initialize score UI at start
+        window.dispatchEvent(new CustomEvent('scoreUpdate', { detail: window.gameState }));
+      }
+      setupPlayerTouchMove();
+    });
+  </script>
 </body>
 </html>
